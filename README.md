@@ -1,4 +1,4 @@
-# <p align=center>gitops-fluxcd-project  <br> <br> <br>  </p> 
+# <p align=center>Gitops Fluxcd Project  <br> <br> <br>  </p> 
 
 ### Table of Contents
 
@@ -164,6 +164,7 @@ gitops-fluxcd-project
 
 ```sudo sed -i '/ swap / s/^/#/' /etc/fstab```
 
+
 **2. Install and configure k3s**
 
 ```curl -sfL https://get.k3s.io | sh -```
@@ -182,16 +183,18 @@ gitops-fluxcd-project
 
 ```kubectl get nodes```
 
-The Output will be:
+The output will be:
 ```
 NAME          STATUS   ROLES                  AGE   VERSION
 shadikul-pc   Ready    control-plane, master   18d   v1.33.4+k3s1
 ```
+
 **3. Install Flux CLI**
 
 ```curl -s https://fluxcd.io/install.sh | sudo bash```
 
 ```flux --version```
+
 
 **4. Install SOPS**
 
@@ -200,6 +203,7 @@ shadikul-pc   Ready    control-plane, master   18d   v1.33.4+k3s1
 ```sudo mv sops-v3.10.2.linux.amd64 /usr/local/bin/sops```
 
 ```sudo chmod +x /usr/local/bin/sops```
+
 
 **5.  Install Age**
 
@@ -218,4 +222,86 @@ shadikul-pc   Ready    control-plane, master   18d   v1.33.4+k3s1
 ```cat $HOME/.config/sops/age/keys.txt```
 
 Insert Image 1
+
+
+**6. Git Repository Setup**
+
+Follow these steps to prepare your Git repository for FluxCD:
+
+- Create a new Git repository on GitHub to store all your Kubernetes manifests and configuration files.
+
+- Clone the repository to your local machine.
+
+- Download or clone this repository that contains all the preconfigured files.
+
+- Move the **cluster** and **plain-text** folders from the downloaded repository into your newly created Git repository local folder.
+
+- Delete the flux-system folder from your local repository folder to avoid conflicts with your own Flux bootstrap process.
+
+
+**7. Encrypt MySQL Secret with SOPS and Age**
+
+```sops --encrypt --age $(grep 'public key:' $HOME/.config/sops/age/keys.txt | awk '{print $4}') --encrypted-regex '^(data|stringData)$' plain-secret/mysql-plain-secret.yaml > cluster/database/mysql/mysql-secret.enc.yaml```
+
+After running that command, it will create a file named **mysql-secret.enc.yaml** inside the **cluster/database/mysql/** directory.
+
+Decrypt the encrypted file and compare it with the plain-text version to ensure both contain the same values.
+
+```cat plain-secret/mysql-plain-secret.yaml && sops -d cluster/database/mysql/mysql-secret.enc.yaml```
+
+Insert Image 2
+
+
+**8. Prepare Kubernetes Secrets**
+
+- Create a Docker Hub Secret
+
+- Go to Docker Hub and create an account (if you don’t already have one).
+
+- Generate an access token from your Docker Hub account settings.
+
+- Use this token to create a Kubernetes secret for pulling images from Docker Hub.
+
+```
+kubectl create namespace flux-system
+```
+```
+kubectl get ns
+```
+```
+kubectl create secret docker-registry dockerhub-cred \
+  --docker-server=registry-1.docker.io \
+  --docker-username=shadikul \
+  --docker-password=your-docker-hub-token \
+  --docker-email=shadikul.islam.shuvo@gmail.com \
+  -n flux-system
+```
+- Create a Kubernetes secret that stores the Age private key, which FluxCD will use to decrypt SOPS-encrypted files.
+```
+kubectl create secret generic sops-age-key \
+  --from-file=age.agekey=$HOME/.config/sops/age/keys.txt \
+  -n flux-system
+```
+
+
+**9. Connect FluxCD with GitHub Repository**
+
+- Create a GitHub Personal Access Token
+
+  - Log in to your GitHub account
+  - Go to Settings → Developer settings → Personal access tokens → Tokens (classic).
+  - Click Generate new token and grant the necessary permissions (typically repo and workflow).
+
+- Copy the generated token securely. You’ll need it to authenticate with GitHub from your terminal.
+
+- Run flux bootstrap GitHub command:
+  
+```
+flux bootstrap github \
+  --owner=Shadikul-Islam \
+  --repository=gitops-fluxcd-project \
+  --branch=master \
+  --path=cluster \
+  --personal
+```
 
