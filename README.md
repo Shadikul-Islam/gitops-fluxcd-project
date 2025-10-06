@@ -305,3 +305,70 @@ flux bootstrap github \
   --personal
 ```
 
+**10. Apply One-Time Custom Kustomizations**
+
+- Apply the following two custom Kustomizations. These steps are only required once for the cluster setup:
+
+```kubectl apply -f cluster/database/mysql/kustomization-mysql.yaml```
+
+```kubectl apply -f cluster/infrastructure/metallb/kustomization-metallb.yaml```
+
+
+<br>
+
+### <a name="05">Deployment Verification</a>
+
+The following screenshots demonstrate that all components of the project have been successfully deployed and are functioning as expected:
+
+- Kubernetes Components Verification
+
+  ```kubectl get ns```
+
+  Image3
+
+  ```kubectl get all -n flux-system```
+
+  Image4
+
+  ```kubectl get all -n ingress-nginx```
+
+  Image5
+
+  ```kubectl get all -n metallb-system```
+
+  Image6
+
+  ```kubectl get all -n monitoring```
+
+  Image7
+
+  ```kubectl get all -n mysql```
+
+  Image8
+
+  ```kubectl get all -n wordpress```
+  
+  Image9
+
+  ```kubectl get ingress --all-namespaces```
+
+  Image10
+
+
+- WordPress Application Accessible at http://app.local and Admin Panel Accessible at http://app.local/wp-admin
+
+Image11
+
+Image12
+
+- Monitoring Dashboard Grafana accessible at http://app-monitor.local
+
+Image13
+
+Image14
+
+Image15
+
+Image16
+
+
