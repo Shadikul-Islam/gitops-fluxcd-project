@@ -18,6 +18,16 @@ spec:
       allowSnippetAnnotations: true
       config:
         enable-lua: "true"
+      admissionWebhooks:
+        enabled: true
+        objectSelector:
+          matchExpressions:
+            - key: enable-snippets
+              operator: In
+              values:
+                - "true"
+      podAnnotations:
+        enable-snippets: "true"
       service:
         type: LoadBalancer
-        externalIPs: [] 
+        externalIPs: []
