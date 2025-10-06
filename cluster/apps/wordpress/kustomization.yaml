@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - helmrelease.yaml
   - namespace.yaml
-  - wp-secret.enc.yaml
   - ingress.yaml
