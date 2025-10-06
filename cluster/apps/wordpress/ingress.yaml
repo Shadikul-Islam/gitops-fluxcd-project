@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wordpress
+  namespace: wordpress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($uri !~ ^(/$|/index\.php$|/wp-admin(/.*)?$|/wp-login\.php$|/wp-content(/.*)?$|/wp-includes(/.*)?$|/wp-json(/.*)?$|/wp-admin/admin-ajax.php$)) {
+        return 404;
+      }
+    nginx.ingress.kubernetes.io/server-snippet: |
+      error_page 404 = @redirect_to_google;
+      location @redirect_to_google {
+        access_by_lua_block {
+          return ngx.redirect("https://www.google.com", 302)
+        }
+      }
+spec:
+  rules:
+    - host: app.local
+      http:
+        paths:
+          - path: /(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: wordpress
+                port:
+                  number: 80

@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: promtail
+  namespace: monitoring
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: promtail
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+  values:
+    fullnameOverride: promtail
+    config:
+      clients:
+        - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+      positions:
+        filename: /data/positions.yaml
+      server:
+        http_listen_port: 9080
+      snippets:
+        journal: {}
+      lokiAddress: http://loki.monitoring.svc.cluster.local:3100
+      scrape_configs:
+        - job_name: wordpress
+          static_configs:
+            - targets:
+                - localhost
+              labels:
+                app: wordpress
+                namespace: wordpress
+                __path__: /var/log/containers/*wordpress*.log
+        - job_name: ingress-nginx
+          static_configs:
+            - targets:
+                - localhost
+              labels:
+                app: ingress-nginx
+                namespace: ingress-nginx
+                __path__: /var/log/containers/*ingress-nginx-controller*.log
+    extraArgs: []
+    serviceAccount:
+      create: true
