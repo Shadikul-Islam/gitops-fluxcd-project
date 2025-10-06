@@ -6,6 +6,8 @@
 | --- | --- |
 | 01 | [Project Overview and Requirements](#01) |
 | 02 | [Tools and Technologies Used](#02) |
+| 03 | [Project Structure](#03) |
+| 04 | [Setup and Deployment Process](#04)  |
 
 <br>
 
@@ -81,5 +83,139 @@ This project is built using the following tools and technologies:
 <br>
 
 
+### <a name="03">Project Structure</a>
+```
+gitops-fluxcd-project
+├── cluster
+│   ├── apps
+│   │   ├── kustomization.yaml
+│   │   └── wordpress
+│   │       ├── helmrelease.yaml
+│   │       ├── ingress.yaml
+│   │       ├── kustomization-wp.yaml
+│   │       ├── kustomization.yaml
+│   │       └── namespace.yaml
+│   ├── database
+│   │   ├── kustomization.yaml
+│   │   └── mysql
+│   │       ├── helmrelease.yaml
+│   │       ├── kustomization-mysql.yaml
+│   │       ├── kustomization.yaml
+│   │       ├── mysql-secret.enc.yaml
+│   │       └── namespace.yaml
+│   ├── flux-system
+│   │   ├── gotk-components.yaml
+│   │   ├── gotk-sync.yaml
+│   │   └── kustomization.yaml
+│   ├── infrastructure
+│   │   ├── ingress-nginx
+│   │   │   ├── helmrelease.yaml
+│   │   │   ├── kustomization.yaml
+│   │   │   └── namespace.yaml
+│   │   ├── kustomization.yaml
+│   │   ├── metallb
+│   │   │   ├── config
+│   │   │   │   └── metallb-config.yaml
+│   │   │   ├── helmrelease.yaml
+│   │   │   ├── kustomization-metallb.yaml
+│   │   │   ├── kustomization.yaml
+│   │   │   └── namespace.yaml
+│   │   └── monitoring
+│   │       ├── grafana
+│   │       │   ├── dashboards
+│   │       │   │   ├── dashboard-ingress-logs.json
+│   │       │   │   └── dashboard-wordpress-logs.json
+│   │       │   ├── helmrelease.yaml
+│   │       │   ├── ingress-dashboard-configmap.yaml
+│   │       │   ├── ingress.yaml
+│   │       │   ├── kustomization.yaml
+│   │       │   └── wordpress-dashboard-configmap.yaml
+│   │       ├── kustomization.yaml
+│   │       ├── loki
+│   │       │   ├── helmrelease.yaml
+│   │       │   └── kustomization.yaml
+│   │       ├── namespace.yaml
+│   │       ├── prometheus
+│   │       │   ├── helmrelease.yaml
+│   │       │   └── kustomization.yaml
+│   │       └── promtail
+│   │           ├── helmrelease.yaml
+│   │           └── kustomization.yaml
+│   └── sources
+│       ├── bitnami-helmrepo.yaml
+│       ├── grafana-helmrepo.yaml
+│       ├── ingress-nginx-helmrepo.yaml
+│       ├── kustomization.yaml
+│       └── prometheus-helmrepo.yaml
+├── plain-secret
+│   └── mysql-plain-secret.yaml
+└── README.md
+```
 
+<br>
+
+### <a name="04">Setup and Deployment Process</a>
+
+**1. Prerequisites**
+
+```sudo apt install -y curl git ufw vim wget gnupg apt-transport-https```
+
+```sudo swapoff -a```
+
+```sudo sed -i '/ swap / s/^/#/' /etc/fstab```
+
+**2. Install and configure k3s**
+
+```curl -sfL https://get.k3s.io | sh -```
+
+```mkdir -p $HOME/.kube```
+
+```vim ~/.bashrc```
+
+```export KUBECONFIG=$HOME/.kube/config```
+
+```source ~/.bashrc```
+
+```sudo cp /etc/rancher/k3s/k3s.yaml $HOME/.kube/config```
+
+```sudo chown $(id -u):$(id -g) $HOME/.kube/config```
+
+```kubectl get nodes```
+
+The Output will be:
+```
+NAME          STATUS   ROLES                  AGE   VERSION
+shadikul-pc   Ready    control-plane, master   18d   v1.33.4+k3s1
+```
+**3. Install Flux CLI**
+
+```curl -s https://fluxcd.io/install.sh | sudo bash```
+
+```flux --version```
+
+**4. Install SOPS**
+
+```curl -LO https://github.com/getsops/sops/releases/download/v3.10.2/sops-v3.10.2.linux.amd64```
+
+```sudo mv sops-v3.10.2.linux.amd64 /usr/local/bin/sops```
+
+```sudo chmod +x /usr/local/bin/sops```
+
+**5.  Install Age**
+
+```wget https://github.com/FiloSottile/age/releases/download/v1.2.1/age-v1.2.1-linux-amd64.tar.gz```
+
+```tar -xvf age-v1.2.1-linux-amd64.tar.gz```
+
+```sudo mv age/age age/age-keygen /usr/local/bin/```
+
+```age-keygen --version && age --version```
+
+```mkdir -p $HOME/.config/sops/age```
+
+```age-keygen -o $HOME/.config/sops/age/keys.txt```
+
+```cat $HOME/.config/sops/age/keys.txt```
+
+Insert Image 1
 
