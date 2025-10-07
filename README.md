@@ -149,6 +149,7 @@ gitops-fluxcd-project
 │       └── prometheus-helmrepo.yaml
 ├── plain-secret
 │   └── mysql-plain-secret.yaml
+└── screenshots
 └── README.md
 ```
 
@@ -221,7 +222,7 @@ shadikul-pc   Ready    control-plane, master   18d   v1.33.4+k3s1
 
 ```cat $HOME/.config/sops/age/keys.txt```
 
-Insert Image 1
+<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/1-age-key.png"> <br>
 
 
 **6. Git Repository Setup**
@@ -249,7 +250,7 @@ Decrypt the encrypted file and compare it with the plain-text version to ensure 
 
 ```cat plain-secret/mysql-plain-secret.yaml && sops -d cluster/database/mysql/mysql-secret.enc.yaml```
 
-Insert Image 2
+<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/2-sops-secret.png"> <br>
 
 
 **8. Prepare Kubernetes Secrets**
@@ -324,59 +325,60 @@ The following screenshots demonstrate that all components of the project have be
 
   ```kubectl get ns```
 
-  Image3
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/3-ns.png"> <br>
 
   ```kubectl get all -n flux-system```
 
-  Image4
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/4-flux-system.png"> <br>
 
   ```kubectl get all -n ingress-nginx```
 
-  Image5
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/5-ingress.png"> <br>
 
   ```kubectl get all -n metallb-system```
 
-  Image6
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/6-metallb.png"> <br>
 
   ```kubectl get all -n monitoring```
 
-  Image7
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/7-monitoring.png"> <br>
 
   ```kubectl get all -n mysql```
 
-  Image8
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/8-mysql.png"> <br>
 
   ```kubectl get all -n wordpress```
   
-  Image9
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/9-wordpress.png"> <br>
 
   ```kubectl get ingress --all-namespaces```
 
-  Image10
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/10-ingress.png"> <br>
 
 - Add the following entries to your ```/etc/hosts``` file to map the local domains to your cluster’s load balancer IP
   
   ```sudo vim /etc/hosts```
-  ```
-  192.168.26.227 app-monitor.local
-  192.168.26.227 app.local
-  ```
-Image17
+
+  ```192.168.26.227 app.local```
+  
+  ```192.168.26.227 app-monitor.local```
+
+<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/17-etc-hosts.png"> <br>
 
 - WordPress Application Accessible at http://app.local and Admin Panel Accessible at http://app.local/wp-admin
 
-Image11
+<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/11-wp-app.png"> <br>
 
-Image12
+<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/12-wp-admin.png"> <br>
 
 - Monitoring Dashboard Grafana accessible at http://app-monitor.local
 
-Image13
+<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/13-grafana.png"> <br>
 
-Image14
+<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/14-dashboard-1.png"> <br>
 
-Image15
+<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/15-dashboard-2.png"> <br>
 
-Image16
+<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/16-dashboard-3.png"> <br>
 
 
