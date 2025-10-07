@@ -365,6 +365,10 @@ The following screenshots demonstrate that all components of the project have be
   
   <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/9-wordpress.png"> <br>
 
+  ```flux get all```
+  
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/18-flux.png"> <br>
+
   ```kubectl get ingress --all-namespaces```
 
   <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/10-ingress.png"> <br>
