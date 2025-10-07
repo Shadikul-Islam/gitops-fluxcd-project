@@ -83,7 +83,7 @@ By the end of this setup, the WordPress application and monitoring dashboard sho
 This project is built using the following tools and technologies:
 - Kubernetes
 - FluxCD
-- SOPS with age
+- SOPS with Age
 - MetalLB
 - Ingress Nginx
 - Helm
