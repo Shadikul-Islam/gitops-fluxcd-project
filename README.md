@@ -355,6 +355,7 @@ The following screenshots demonstrate that all components of the project have be
   Image10
 
 - Add the following entries to your ```/etc/hosts``` file to map the local domains to your cluster’s load balancer IP
+  
   ```sudo vim /etc/hosts```
   ```
   192.168.26.227 app-monitor.local
