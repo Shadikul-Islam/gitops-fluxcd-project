@@ -385,7 +385,7 @@ The following screenshots demonstrate that all components of the project have be
 
 <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/12-wp-admin.png"> <br>
 
-- Monitoring Dashboard Grafana accessible at http://app-monitor.local
+- Monitoring Dashboard Grafana is accessible at http://app-monitor.local. **Username:** admin and **Password:** admin. These credentials are declared in the ```cluster/infrastructure/monitoring/grafana/helmrelease.yaml``` file.
 
 <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/13-grafana.png"> <br>
 
