@@ -377,23 +377,23 @@ The following screenshots demonstrate that all components of the project have be
   
   ```192.168.26.227 app-monitor.local```
 
-<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/17-etc-hosts.png"> <br>
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/17-etc-hosts.png"> <br>
 
 - WordPress Application Accessible at http://app.local and Admin Panel Accessible at http://app.local/wp-admin
 
-<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/11-wp-app.png"> <br>
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/11-wp-app.png"> <br>
 
-<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/12-wp-admin.png"> <br>
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/12-wp-admin.png"> <br>
 
 - Monitoring Dashboard Grafana is accessible at http://app-monitor.local. **Username:** admin and **Password:** admin. These credentials are declared in the ```cluster/infrastructure/monitoring/grafana/helmrelease.yaml``` file.
 
-<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/13-grafana.png"> <br>
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/13-grafana.png"> <br>
 
-<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/14-dashboard-1.png"> <br>
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/14-dashboard-1.png"> <br>
 
-<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/15-dashboard-2.png"> <br>
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/15-dashboard-2.png"> <br>
 
-<img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/16-dashboard-3.png"> <br>
+  <img src= "https://github.com/Shadikul-Islam/gitops-fluxcd-project/blob/master/screenshots/16-dashboard-3.png"> <br>
 
 <br>
 
