@@ -1,4 +1,4 @@
-# <p align=center>Gitops Fluxcd Project  <br> <br> </p> 
+# <p align=center>Gitops Fluxcd Project  <br> </p> 
 
 ### Table of Contents
 
