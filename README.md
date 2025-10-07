@@ -56,7 +56,7 @@ found.
 
 ●​ Deploy Prometheus, Loki, and Grafana along with Promtail (or Alloy) declaratively with FluxCD.
 
-●​ Configure logs from Kubernetes pods (e.g., WordPress, ingress-nginx, etc.) to be sent to Loki via Promtai/Alloy.
+●​ Configure logs from Kubernetes pods (e.g., WordPress, ingress-nginx, etc.) to be sent to Loki via Promtail/Alloy.
 
 ●​ Set up a Grafana dashboard to visualize WordPress pod logs.
 
